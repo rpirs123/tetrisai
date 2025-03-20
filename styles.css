@@ -7,7 +7,7 @@ body{
     border: 2px solid  green;
 }
 
-.dark-mode {
+.light-mode {
     background-color: white;
     color: black;
   }

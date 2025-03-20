@@ -5,6 +5,16 @@ export class SelectRandomTetromino{
         this.index = -1 
     }
 
+
+    getNextPiece(){
+        this.index++;
+        if(this.index > this.bag.length){
+            this.shuffleBag()
+            this.index = 0
+        }
+        return "TETROMINO  PLACEHOLDER"
+    }
+
     shuffleBag(){
         let currentIndex = this.bag.length
         let tempValue;
@@ -13,7 +23,6 @@ export class SelectRandomTetromino{
         while(currentIndex != 0){
 
             randomIndex = Math.floor(Math.random() * currentIndex)
-            console.log(randomIndex)
             currentIndex -= 1
 
             tempValue = this.bag[currentIndex]
@@ -21,7 +30,7 @@ export class SelectRandomTetromino{
             this.bag[randomIndex] = tempValue
         }
 
-        console.log("completed", this.bag) 
+        console.log("completed bag", this.bag) 
        
     }
 }

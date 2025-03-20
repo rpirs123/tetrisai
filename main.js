@@ -11,7 +11,7 @@ const ctx = canvas.getContext("2d");
 const button = document.getElementById("view-button")
 const body = document.body
 button.addEventListener("click",() => {
-    body.classList.toggle("dark-mode");
+    body.classList.toggle("light-mode");
 
 })
 
