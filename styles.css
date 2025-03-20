@@ -1,3 +1,13 @@
 body{
-    background-color: black;
+    background-color: white;
+    
 }
+
+#grid-canvas{
+    border: 2px solid  green;
+}
+
+.dark-mode {
+    background-color: black;
+    color: white;
+  }
