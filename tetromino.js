@@ -66,4 +66,48 @@ export class Tetromino{
 
         return piece
     }
-}
+
+
+    clone(){
+
+        let _tetromino = new Array()
+
+        for(let r = 0; r < this.dimension; r++){
+            _tetromino[r] = new Array(this.dimension)
+            for(let c = 0; c < this.dimension; c++){
+                _tetromino[r][c] = this.cells[r][c]
+            }
+        }
+
+        let copiedTetromino = new Tetromino(_tetromino)
+        copiedTetromino.row = this.row
+        copiedTetromino.column = this.column
+
+        return copiedTetromino
+    }
+
+    moveDown(grid){
+        if(!this.canMoveDown(grid)){
+            return false 
+        }
+        this.row++
+        return true 
+    }
+
+    canMoveDown(grid){
+        for(let r = 0; r < this.cells.length; r++){
+            for(let c = 0; c < this.cells[r].length; c++){
+                let _r = this.row + r + 1 
+                let _c = this.column + c 
+                if (this.cells[r][c] != 0 && _r >= 0){
+                    if (!(_r < grid.rows && grid.cells[_r][_c] == 0)){
+                        return false;
+                    }
+                }
+                }
+            }
+            return true
+        }
+    }
+
+    
