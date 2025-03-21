@@ -1,3 +1,5 @@
+import { Tetromino } from "./tetromino.js";
+
 export class SelectRandomTetromino{
     constructor(){
         this.bag = [0,1,2,3,4,5,6]
@@ -12,7 +14,7 @@ export class SelectRandomTetromino{
             this.shuffleBag()
             this.index = 0
         }
-        return "TETROMINO  PLACEHOLDER"
+        return  Tetromino.getPieceFromIndex(this.index)
     }
 
     shuffleBag(){
@@ -29,8 +31,6 @@ export class SelectRandomTetromino{
             this.bag[currentIndex] = this.bag[randomIndex]
             this.bag[randomIndex] = tempValue
         }
-
-        console.log("completed bag", this.bag) 
        
     }
 }
