@@ -18,7 +18,7 @@ let activeTetromino = null
 function drawGridCanvas(verticalOffset = 0){
     
     
-    gridCtx.clearRect(0, 0, gridCanvas.width, gridCanvas.height);
+     gridCtx.clearRect(0, 0, gridCanvas.width, gridCanvas.height);
 
 
     // draw existing piecees 
@@ -37,9 +37,9 @@ function drawGridCanvas(verticalOffset = 0){
         for(let c = 0; c < activeTetromino.cells[r].length; c++){
             if(activeTetromino.cells[r][c] != 0){
                 gridCtx.fillStyle = hexToRGBBitwise(activeTetromino.cells[r][c]) 
-                gridCtx.fillRect(20 * (activeTetromino.column + c), 20 * (activeTetromino.row + r- 2) + verticalOffset , 20, 20)
+                gridCtx.fillRect(20 * (activeTetromino.column + c), 20 * (activeTetromino.row + r - 2) + verticalOffset , 20, 20)
                 gridCtx.strokeStyle = "black"
-                gridCtx.strokeRect(20 * (activeTetromino.column + c), 20 * (activeTetromino.row + r- 2) + verticalOffset , 20, 20)
+                gridCtx.strokeRect(20 * (activeTetromino.column + c), 20 * (activeTetromino.row + r - 2) + verticalOffset , 20, 20)
             }
         }
     }
