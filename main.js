@@ -14,6 +14,31 @@ const body = document.body
 
 let activeTetrominoes = [null,srt.getNextPiece()]
 let activeTetromino = null 
+document.addEventListener("keydown",onKeyDown)
+
+
+function onKeyDown(event){
+    console.log("hello",event)
+
+    switch(event.which){
+        case 40: // move down
+            //movedown
+            break;
+        case 38: // rotate
+            //rotate
+            break;
+        case 37: //move left
+            //moveleft
+            break;
+        case 39:  //move right 
+            //move right 
+            break;
+        case 32: 
+            //go full down 
+            break; 
+    }
+
+}
 
 function drawGridCanvas(verticalOffset = 0){
     
@@ -56,14 +81,14 @@ function startGame(){
     activeTetromino = activeTetrominoes[0]
 
 
-    startAnimation(function(){
-        while(activeTetromino.moveDown(grid));
-        if(!endTurn()){
-            alert("game is over bruh")
-            return;
-        }
-        startGame()
-    })
+    // startAnimation(function(){
+    //     while(activeTetromino.moveDown(grid));
+    //     if(!endTurn()){
+    //         alert("game is over bruh")
+    //         return;
+    //     }
+    //     startGame()
+    // })
     
 
 }
