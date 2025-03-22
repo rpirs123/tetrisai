@@ -14,7 +14,7 @@ export class SelectRandomTetromino{
             this.shuffleBag()
             this.index = 0
         }
-        return  Tetromino.getPieceFromIndex(this.index)
+        return  Tetromino.getPieceFromIndex(this.bag[this.index])
     }
 
     shuffleBag(){
