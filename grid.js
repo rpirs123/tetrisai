@@ -26,5 +26,18 @@ export class Grid {
         }
     }
 
+    exceededGrid(){
+        return !this.isEmptyRow(0) || !this.isEmptyRow(1) 
+    }
+
+
+    isEmptyRow(row){
+        for(let c = 0; c < this.columns; c++){
+            if(this.cells[row][c] != 0){
+                return false
+            }
+        }
+        return true
+    }
 }
 
