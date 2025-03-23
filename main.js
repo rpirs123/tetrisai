@@ -1,23 +1,55 @@
 import { Grid } from "./grid.js"
 import { SelectRandomTetromino } from "./selectRandomTetromino.js";
 import { AnimationTimer } from "./animationTimer.js";
+import { PlayerTimer } from "./playerTimer.js";
 
 
 const grid = new Grid(22,10)
 const srt = new SelectRandomTetromino
 
+
 const gridCanvas = document.getElementById("grid-canvas");
 const gridCtx = gridCanvas.getContext("2d");
 
 const button = document.getElementById("view-button")
+const modeButton = document.getElementById("toggle-mode")
 const body = document.body
 
 let activeTetrominoes = [null,srt.getNextPiece()]
 let activeTetromino = null 
+
+let isBotActive = true
+
+const playerTimer = new PlayerTimer(startPlayerTimer,500)
+console.log(playerTimer)
+playerTimer.start()
+
 document.addEventListener("keydown",onKeyDown)
 
 
+function startPlayerTimer(){
+
+    if(activeTetromino.canMoveDown(grid)){
+        activeTetromino.moveDown(grid)
+        drawGridCanvas()
+        return
+    }
+
+    playerTimer.stop()
+
+    if(!endTurn()){
+        isBotActive = false
+        alert("game is over bruh")
+        return;
+    }
+    startGame()
+}
+
 function onKeyDown(event){
+
+    if(isBotActive){
+        return
+    }
     console.log("hello",event)
 
     switch(event.which){
@@ -81,15 +113,21 @@ function startGame(){
     activeTetromino = activeTetrominoes[0]
 
 
-    // startAnimation(function(){
-    //     while(activeTetromino.moveDown(grid));
-    //     if(!endTurn()){
-    //         alert("game is over bruh")
-    //         return;
-    //     }
-    //     startGame()
-    // })
-    
+    if(isBotActive){
+        startAnimation(function(){
+            while(activeTetromino.moveDown(grid));
+            if(!endTurn()){
+                alert("game is over bruh")
+                return;
+            }
+            startGame()
+        })
+        
+    }else{
+        playerTimer.dropTetromino(500)
+        
+    }
+   
 
 }
 
@@ -129,8 +167,6 @@ function startAnimation(callback = function(){}){
 
 
 
-
-
 function hexToRGBBitwise(v) { 
     const red = (v >> 16) & 0xFF;   // Shift right by 16 bits and mask with 0xFF for red
     const green = (v >> 8) & 0xFF;  // Shift right by 8 bits and mask with 0xFF for green
@@ -139,10 +175,20 @@ function hexToRGBBitwise(v) {
     return `rgb(${red}, ${green}, ${blue})`;
 }
 
-
 button.addEventListener("click",() => {
     body.classList.toggle("light-mode");
 
+})
+
+modeButton.addEventListener("click", () =>{
+    if(!isBotActive){
+        isBotActive = true
+        modeButton.style.color = "green"
+    }else{
+        isBotActive = false
+        modeButton.style.color = "red"
+    }
+    console.log(isBotActive)
 })
 
 

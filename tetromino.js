@@ -61,7 +61,7 @@ export class Tetromino{
                 ])
                 break;
         }
-        piece.row = 0
+        piece.row = 2
         piece.column = Math.floor((10 - piece.dimension) / 2)
 
         return piece
