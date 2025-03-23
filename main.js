@@ -49,6 +49,8 @@ function onKeyDown(event){
     if(isBotActive){
         return
     }
+   
+
     console.log("hello",event)
 
     switch(event.which){
@@ -57,6 +59,8 @@ function onKeyDown(event){
             break;
         case 38: // rotate
             //rotate
+            activeTetromino.rotate()
+            drawGridCanvas()
             break;
         case 37: //move left
             if(activeTetromino.canMoveLeft(grid)){
@@ -65,14 +69,21 @@ function onKeyDown(event){
             }
             break;
         case 39:  //move right s
-
-        if(activeTetromino.canMoveRight(grid)){
-            activeTetromino.moveRight(grid)
-            drawGridCanvas()
-        }
+            if(activeTetromino.canMoveRight(grid)){
+                activeTetromino.moveRight(grid)
+                drawGridCanvas()
+            }
             break;
-        case 32: 
-            //go full down 
+        case 32: // spacebar move instantly down
+            while(activeTetromino.canMoveDown(grid)){
+                activeTetromino.moveDown(grid)
+            }
+            if(!endTurn()){
+                alert('game is over bruh');
+                return;
+            }
+            drawGridCanvas()
+            startGame()
             break; 
     }
 
@@ -201,7 +212,7 @@ modeButton.addEventListener("click", () =>{
             startGame()
         })
     }else{
-
+        playerTimer.start()
         isBotActive =false 
         modeButton.style.color = "red"
     }

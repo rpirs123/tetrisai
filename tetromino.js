@@ -156,6 +156,30 @@ export class Tetromino{
             } 
             return true
         }
+
+        rotate(){ // transpose = rows bcome columns, columns bcome rows
+            for(let r = 0; r < this.cells.length; r++){
+                for(let c = r + 1 ; c < this.cells[r].length; c++){
+                    let tempValue = this.cells[r][c]
+                    this.cells[r][c] = this.cells[c][r]
+                    this.cells[c][r] = tempValue
+                }
+            }
+
+
+            //reverse each row
+            for(let r = 0; r < this.cells.length; r++){
+                console.log(this.cells[r])
+                this.cells[r].reverse()
+            }
+            console.log(this)
+
+            
+        }   
+
+        
     }
+
+    // 0 0, 0,1, 0, 2, 
 
     
