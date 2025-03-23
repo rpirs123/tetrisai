@@ -54,7 +54,7 @@ function onKeyDown(event){
 
     switch(event.which){
         case 40: // move down
-            //movedown
+            playerTimer.dropTetromino(500)
             break;
         case 38: // rotate
             //rotate
