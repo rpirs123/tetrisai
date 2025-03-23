@@ -126,6 +126,7 @@ function startGame(){
     }else{
         playerTimer.dropTetromino(500)
         
+        
     }
    
 
@@ -184,11 +185,21 @@ modeButton.addEventListener("click", () =>{
     if(!isBotActive){
         isBotActive = true
         modeButton.style.color = "green"
+        playerTimer.stop()
+        startAnimation(function(){
+            while(activeTetromino.moveDown(grid));
+            if(!endTurn()){
+                alert("game is over bruh")
+                return;
+            }
+            startGame()
+        })
     }else{
+
         isBotActive = false
         modeButton.style.color = "red"
     }
-    console.log(isBotActive)
+    
 })
 
 
