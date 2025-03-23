@@ -18,10 +18,9 @@ const body = document.body
 let activeTetrominoes = [null,srt.getNextPiece()]
 let activeTetromino = null 
 
-let isBotActive = true
+let isBotActive = false
 
 const playerTimer = new PlayerTimer(startPlayerTimer,500)
-console.log(playerTimer)
 playerTimer.start()
 
 document.addEventListener("keydown",onKeyDown)
@@ -60,10 +59,17 @@ function onKeyDown(event){
             //rotate
             break;
         case 37: //move left
-            //moveleft
+            if(activeTetromino.canMoveLeft(grid)){
+                activeTetromino.moveLeft(grid)
+                drawGridCanvas()
+            }
             break;
-        case 39:  //move right 
-            //move right 
+        case 39:  //move right s
+
+        if(activeTetromino.canMoveRight(grid)){
+            activeTetromino.moveRight(grid)
+            drawGridCanvas()
+        }
             break;
         case 32: 
             //go full down 
@@ -161,7 +167,7 @@ function startAnimation(callback = function(){}){
 
         drawGridCanvas(elapsedTime) 
     })
-    console.log(animationTimer)
+    
 
     requestAnimationFrame(() => animationTimer.animateFrame())
 }
@@ -196,7 +202,7 @@ modeButton.addEventListener("click", () =>{
         })
     }else{
 
-        isBotActive = false
+        isBotActive =false 
         modeButton.style.color = "red"
     }
     

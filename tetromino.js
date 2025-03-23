@@ -108,6 +108,54 @@ export class Tetromino{
             }
             return true
         }
+
+        moveLeft(grid){
+            if(!this.canMoveLeft(grid)){
+                return false
+            }
+            this.column--
+            return true
+        }
+
+        canMoveLeft(grid){
+            for(let r = 0; r < this.cells.length; r++){
+                for(let c = 0; c < this.cells[r].length; c++){
+                    let _r = this.row + r 
+                    let _c  = this.column + c - 1
+                    if(this.cells[r][c] != 0){
+                        if(!(_c < grid.columns && grid.cells[_r][_c] == 0)){
+                            console.log("collision")
+                            return false
+                        }
+                    }
+                }
+            }
+            return true
+        }
+
+        moveRight(grid){
+            if(!this.canMoveRight(grid)){
+                return false
+            }
+            this.column++
+            return true
+        }
+
+        canMoveRight(grid){
+            for(let r = 0; r < this.cells.length; r++ ){
+                for(let c = 0; c < this.cells[r].length; c++){
+                    let _r = this.row + r
+                    let _c =this.column + c + 1
+                    if(this.cells[r][c] != 0){
+                        if(!(_c < grid.columns && grid.cells[_r][_c] == 0)){
+                            console.log("collision")
+                            return false
+                        }
+                    }
+                }
+            } 
+            return true
+        }
     }
 
     
