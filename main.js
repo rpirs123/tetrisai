@@ -151,6 +151,9 @@ function startGame(){
 function endTurn(){
     grid.addToBoard(activeTetromino)
 
+    let hello = grid.clearLines()
+    console.log("lines",hello)
+
     drawGridCanvas()
     return !grid.exceededGrid()
 }
