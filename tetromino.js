@@ -61,9 +61,185 @@ export class Tetromino{
                 ])
                 break;
         }
-        piece.row = 2
+        piece.row = 0
         piece.column = Math.floor((10 - piece.dimension) / 2)
 
         return piece
     }
-}
+
+
+    clone(){
+
+        let _tetromino = new Array()
+
+        for(let r = 0; r < this.dimension; r++){
+            _tetromino[r] = new Array(this.dimension)
+            for(let c = 0; c < this.dimension; c++){
+                _tetromino[r][c] = this.cells[r][c]
+            }
+        }
+
+        let copiedTetromino = new Tetromino(_tetromino)
+        copiedTetromino.row = this.row
+        copiedTetromino.column = this.column
+
+        return copiedTetromino
+    }
+
+    moveDown(grid){
+        if(!this.canMoveDown(grid)){
+            return false 
+        }
+        this.row++
+        return true 
+    }
+
+    canMoveDown(grid){
+        for(let r = 0; r < this.cells.length; r++){
+            for(let c = 0; c < this.cells[r].length; c++){
+                let _r = this.row + r + 1 
+                let _c = this.column + c 
+                if (this.cells[r][c] != 0 && _r >= 0){
+                    if (!(_r < grid.rows && grid.cells[_r][_c] == 0)){
+                        return false;
+                    }
+                }
+                }
+            }
+            return true
+        }
+
+        moveLeft(grid){
+            if(!this.canMoveLeft(grid)){
+                return false
+            }
+            this.column--
+            return true
+        }
+
+        canMoveLeft(grid){
+            for(let r = 0; r < this.cells.length; r++){
+                for(let c = 0; c < this.cells[r].length; c++){
+                    let _r = this.row + r 
+                    let _c  = this.column + c - 1
+                    if(this.cells[r][c] != 0){
+                        if(!(_c < grid.columns && grid.cells[_r][_c] == 0)){
+                            console.log("collision")
+                            return false
+                        }
+                    }
+                }
+            }
+            return true
+        }
+
+        moveRight(grid){
+            if(!this.canMoveRight(grid)){
+                return false
+            }
+            this.column++
+            return true
+        }
+
+        canMoveRight(grid){
+            for(let r = 0; r < this.cells.length; r++ ){
+                for(let c = 0; c < this.cells[r].length; c++){
+                    let _r = this.row + r
+                    let _c =this.column + c + 1
+                    if(this.cells[r][c] != 0){
+                        if(!(_c < grid.columns && grid.cells[_r][_c] == 0)){
+                            console.log("collision")
+                            return false
+                        }
+                    }
+                }
+            } 
+            return true
+        }
+
+        rotate(grid){ // transpose = rows bcome columns, columns bcome rows
+
+            let adjustedPosition = this.positionAfterRotation(grid)
+            
+            if(adjustedPosition != null){
+                    
+               this.rotateTetromino()
+               this.column += adjustedPosition.columnAdjustment
+               this.row += adjustedPosition.rowAdjustment
+
+            }
+
+            
+        }   
+
+        positionAfterRotation(grid){
+            let _tetromino = this.clone()
+           _tetromino.rotateTetromino()
+            
+           // check if is valid
+           if(grid.isValid(_tetromino)){
+                return {rowAdjustment: _tetromino.row - this.row, columnAdjustment: _tetromino.column - this.column}
+           }
+        
+           // if not valid, attempt wall kick
+           let startRow = _tetromino.row
+           let startColumn = _tetromino.column
+           
+           for(let i = 0; i < _tetromino.cells.length - 1; i++){
+                _tetromino.column = startColumn + i
+                if(grid.isValid(_tetromino)){
+                    return {rowAdjustment: _tetromino.row - this.row, columnAdjustment: _tetromino.column - this.column}
+                }
+
+                for(let j = 0; j < _tetromino.cells.length -1; j++){
+                    _tetromino.row = startRow - j
+                    if(grid.isValid(_tetromino)){
+                        return {rowAdjustment: _tetromino.row - this.row, columnAdjustment: _tetromino.column - this.column}
+                    }
+               }
+               _tetromino.row = startRow
+           }
+           _tetromino.column = startColumn
+
+           for(let i = 0; i < _tetromino.cells.length - 1; i++){
+                _tetromino.column = startColumn - 1 
+                if(grid.isValid(_tetromino)){
+                    return {rowAdjustment: _tetromino.row - this.row, columnAdjustment: _tetromino.column - this.column}
+                }
+                
+                for(let j = 0; j < _tetromino.cells.length - 1; j++){
+                    _tetromino.row = startRow - j 
+                    if(grid.isValid(_tetromino)){
+                        return {rowAdjustment: _tetromino.row - this.row, columnAdjustment: _tetromino.column - this.column}
+                    }
+                }
+                _tetromino.row = startRow
+           }
+           _tetromino.column = startColumn
+
+            return null
+        }
+
+        rotateTetromino(){
+            //transpose matrix
+            for(let r = 0; r < this.cells.length; r++){
+                for(let c = r + 1 ; c < this.cells[r].length; c++){
+                    let tempValue = this.cells[r][c]
+                    this.cells[r][c] = this.cells[c][r]
+                    this.cells[c][r] = tempValue
+                }
+            }
+
+
+            //reverse each row
+            for(let r = 0; r < this.cells.length; r++){
+                console.log(this.cells[r])
+                this.cells[r].reverse()
+            }
+            console.log(this)
+        }
+        
+    }
+
+
+    

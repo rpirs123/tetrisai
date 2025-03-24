@@ -10,11 +10,11 @@ export class SelectRandomTetromino{
 
     getNextPiece(){
         this.index++;
-        if(this.index > this.bag.length){
+        if(this.index > this.bag.length - 1){
             this.shuffleBag()
             this.index = 0
         }
-        return  Tetromino.getPieceFromIndex(this.index)
+        return  Tetromino.getPieceFromIndex(this.bag[this.index])
     }
 
     shuffleBag(){
