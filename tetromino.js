@@ -157,7 +157,7 @@ export class Tetromino{
             return true
         }
 
-        rotate(grid){ // transpose = rows bcome columns, columns bcome rows
+        rotate(grid){ 
 
             let adjustedPosition = this.positionAfterRotation(grid)
             

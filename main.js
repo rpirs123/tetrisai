@@ -182,8 +182,6 @@ function startAnimation(callback = function(){}){
     requestAnimationFrame(() => animationTimer.animateFrame())
 }
 
-
-
 function hexToRGBBitwise(v) { 
     const red = (v >> 16) & 0xFF;   // Shift right by 16 bits and mask with 0xFF for red
     const green = (v >> 8) & 0xFF;  // Shift right by 8 bits and mask with 0xFF for green
@@ -211,7 +209,7 @@ modeButton.addEventListener("click", () =>{
             startGame()
         })
     }else{
-        playerTimer.start()
+        // playerTimer.start()
         isBotActive =false 
         modeButton.style.color = "red"
     }
