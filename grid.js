@@ -39,5 +39,27 @@ export class Grid {
         }
         return true
     }
+
+    isValid(tetromino){
+        for(let r = 0; r < tetromino.cells.length; r++){
+            for(let c = 0; c < tetromino.cells[r].length; c++){
+                let _r = tetromino.row + r
+                let _c = tetromino.column + c
+                if(tetromino.cells[r][c] != 0){
+                    if(_r < 0 || _r > this.rows){
+                        return false
+                    }
+                    if(_c < 0 || _c > this.columns){
+                        return false
+                    }
+                    if(this.cells[_r][_c] != 0){
+                        return false
+                    }
+
+                }
+            }
+        }
+        return true;
+    }
 }
 

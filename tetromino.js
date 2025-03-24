@@ -157,7 +157,71 @@ export class Tetromino{
             return true
         }
 
-        rotate(){ // transpose = rows bcome columns, columns bcome rows
+        rotate(grid){ // transpose = rows bcome columns, columns bcome rows
+
+            let adjustedPosition = this.positionAfterRotation(grid)
+            
+            if(adjustedPosition != null){
+                    
+               this.rotateTetromino()
+               this.column += adjustedPosition.columnAdjustment
+               this.row += adjustedPosition.rowAdjustment
+
+            }
+
+            
+        }   
+
+        positionAfterRotation(grid){
+            let _tetromino = this.clone()
+           _tetromino.rotateTetromino()
+            
+           // check if is valid
+           if(grid.isValid(_tetromino)){
+                return {rowAdjustment: _tetromino.row - this.row, columnAdjustment: _tetromino.column - this.column}
+           }
+        
+           // if not valid, attempt wall kick
+           let startRow = _tetromino.row
+           let startColumn = _tetromino.column
+           
+           for(let i = 0; i < _tetromino.cells.length - 1; i++){
+                _tetromino.column = startColumn + i
+                if(grid.isValid(_tetromino)){
+                    return {rowAdjustment: _tetromino.row - this.row, columnAdjustment: _tetromino.column - this.column}
+                }
+
+                for(let j = 0; j < _tetromino.cells.length -1; j++){
+                    _tetromino.row = startRow - j
+                    if(grid.isValid(_tetromino)){
+                        return {rowAdjustment: _tetromino.row - this.row, columnAdjustment: _tetromino.column - this.column}
+                    }
+               }
+               _tetromino.row = startRow
+           }
+           _tetromino.column = startColumn
+
+           for(let i = 0; i < _tetromino.cells.length - 1; i++){
+                _tetromino.column = startColumn - 1 
+                if(grid.isValid(_tetromino)){
+                    return {rowAdjustment: _tetromino.row - this.row, columnAdjustment: _tetromino.column - this.column}
+                }
+                
+                for(let j = 0; j < _tetromino.cells.length - 1; j++){
+                    _tetromino.row = startRow - j 
+                    if(grid.isValid(_tetromino)){
+                        return {rowAdjustment: _tetromino.row - this.row, columnAdjustment: _tetromino.column - this.column}
+                    }
+                }
+                _tetromino.row = startRow
+           }
+           _tetromino.column = startColumn
+
+            return null
+        }
+
+        rotateTetromino(){
+            //transpose matrix
             for(let r = 0; r < this.cells.length; r++){
                 for(let c = r + 1 ; c < this.cells[r].length; c++){
                     let tempValue = this.cells[r][c]
@@ -173,13 +237,9 @@ export class Tetromino{
                 this.cells[r].reverse()
             }
             console.log(this)
-
-            
-        }   
-
+        }
         
     }
 
-    // 0 0, 0,1, 0, 2, 
 
     

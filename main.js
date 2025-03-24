@@ -58,8 +58,7 @@ function onKeyDown(event){
             playerTimer.dropTetromino(500)
             break;
         case 38: // rotate
-            //rotate
-            activeTetromino.rotate()
+            activeTetromino.rotate(grid)
             drawGridCanvas()
             break;
         case 37: //move left
