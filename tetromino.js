@@ -20,7 +20,7 @@ export class Tetromino{
             case 1:  // I  0x00FFF   0x000000  black
                 piece = new Tetromino([
                     [0x000000,0x000000 ,0x000000 ,0x000000 ],
-                    [0x00FFF, 0x00FFF ,0x00FFF ,0x00FFF ],
+                    [0x00FFFF, 0x00FFFF ,0x00FFFF ,0x00FFFF ],
                     [0x000000,0x000000 ,0x000000 ,0x000000 ],
                     [0x000000,0x000000 ,0x000000 ,0x000000 ]
                 ])
