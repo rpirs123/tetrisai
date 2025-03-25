@@ -10,15 +10,19 @@ const srt = new SelectRandomTetromino
 
 const gridCanvas = document.getElementById("grid-canvas");
 const gridCtx = gridCanvas.getContext("2d");
+const nextCanvas = document.getElementById("next-canvas")
+const nextCtx = nextCanvas.getContext("2d")
 
 const button = document.getElementById("view-button")
 const modeButton = document.getElementById("toggle-mode")
+const scoreContainer = document.querySelector(".score-container")
 const body = document.body
 
 let activeTetrominoes = [null,srt.getNextPiece()]
 let activeTetromino = null 
 
 let isBotActive = false
+let score = 0;
 
 const playerTimer = new PlayerTimer(startPlayerTimer,500)
 playerTimer.start()
@@ -120,6 +124,27 @@ function drawGridCanvas(verticalOffset = 0){
     
 }
 
+function drawNextCanvas(){
+    let next = activeTetrominoes[1]
+    console.log(next)
+
+    nextCtx.clearRect(0, 0, nextCanvas.width, nextCanvas.height);
+
+    for(let r = 0; r < next.cells.length; r++){
+        for(let c = 0; c < next.dimension; c++){
+            if(next.cells[r][c] !=0){
+                console.log("drawing")
+                nextCtx.fillStyle = hexToRGBBitwise(next.cells[r][c])
+                nextCtx.fillRect(20 * c, 20 * r, 20,20)
+                nextCtx.strokeStyle = "black"
+                nextCtx.strokeRect(20 * c, 20 * r, 20,20)
+
+                
+            }
+        }
+    }
+}
+
 
 function startGame(){
     for(let i = 0; i < activeTetrominoes.length; i++){ 
@@ -127,6 +152,8 @@ function startGame(){
     }
     activeTetrominoes[activeTetrominoes.length - 1] = srt.getNextPiece()
     activeTetromino = activeTetrominoes[0]
+
+    drawNextCanvas()
 
 
     if(isBotActive){
@@ -151,9 +178,9 @@ function startGame(){
 function endTurn(){
     grid.addToBoard(activeTetromino)
 
-    let hello = grid.clearLines()
-    console.log("lines",hello)
+    score += grid.clearLines()
 
+    updateScore()
     drawGridCanvas()
     return !grid.exceededGrid()
 }
@@ -191,6 +218,10 @@ function hexToRGBBitwise(v) {
     const blue = v & 0xFF;          // Mask the last 8 bits for blue
 
     return `rgb(${red}, ${green}, ${blue})`;
+}
+
+function updateScore(){
+     scoreContainer.innerHTML = score.toString()
 }
 
 button.addEventListener("click",() => {
