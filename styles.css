@@ -1,15 +1,10 @@
 body{
-    background-color: black;
+    background-color: #121212;
     
 }
 
-#grid-canvas{
-    border: 2px solid  green;
-}
-
-.light-mode {
-    background-color: white;
-    color: black;
+  #grid-canvas{
+      border: 2px solid  #FF1493;
   }
 
   #container{
@@ -43,17 +38,25 @@ body{
 
   .next-tetromino{
     color:white;
-    border: 2px solid green;
+    border: 2px solid #FF1493;
     font-size:15px;
     font-weight: bold;
     padding: 5px;
   }
 
   .score-container{
-    color:white;
-    border: 2px solid green;
+    color:rgb(255, 0, 0);
+    border: 2px solid #FF1493;
     padding: 20px;
-    font-size:15px;
+    font-size:25px;
     margin-top: 10px; 
     text-align: center;
+  }
+
+  .score-container::before{
+    content: "lines cleared:";
+    color: white;
+    font-size: 15px;
+    width: 100%;
+    float: right;
   }

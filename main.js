@@ -160,6 +160,7 @@ function startGame(){
 
 
     if(isBotActive){
+
         startAnimation(function(){
             while(activeTetromino.moveDown(grid));
             if(!endTurn()){
@@ -226,11 +227,6 @@ function hexToRGBBitwise(v) {
 function updateScore(){
      scoreContainer.innerHTML = score.toString()
 }
-
-button.addEventListener("click",() => {
-    body.classList.toggle("light-mode");
-
-})
 
 modeButton.addEventListener("click", () =>{
     if(!isBotActive){
