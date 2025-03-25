@@ -130,14 +130,17 @@ function drawNextCanvas(){
 
     nextCtx.clearRect(0, 0, nextCanvas.width, nextCanvas.height);
 
+    let xOffset = next.dimension === 2 ? 20 : next.dimension === 3 ? 10 : next.dimension === 4 ? 0 : null
+    let yOffset = next.dimension === 2 ? 10 : next.dimension === 3 ? 10 : next.dimension === 4 ? 0 : null
+
     for(let r = 0; r < next.cells.length; r++){
         for(let c = 0; c < next.dimension; c++){
             if(next.cells[r][c] !=0){
                 console.log("drawing")
                 nextCtx.fillStyle = hexToRGBBitwise(next.cells[r][c])
-                nextCtx.fillRect(20 * c, 20 * r, 20,20)
+                nextCtx.fillRect(xOffset + 20 * c, yOffset +20 * r, 20,20)
                 nextCtx.strokeStyle = "black"
-                nextCtx.strokeRect(20 * c, 20 * r, 20,20)
+                nextCtx.strokeRect(xOffset + 20 * c, yOffset +20 * r, 20,20)
 
                 
             }
