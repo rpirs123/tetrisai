@@ -61,5 +61,25 @@ export class Grid {
         }
         return true;
     }
+
+    clearLines(){
+
+        let clearedLines = 0;
+
+            for(let r = this.rows - 1; r >= 0; r--){
+                if(!this.cells[r].includes(0)){
+                    clearedLines++
+                    this.cells[r] = new Array(this.columns).fill(0)
+
+                }else if(clearedLines > 0){
+                    for(let c = 0; c < this.columns; c++){
+                        this.cells[r+clearedLines][c] = this.cells[r][c]
+                        this.cells[r][c]
+                    }
+                }
+            }
+        
+        return clearedLines
+    }
 }
 

@@ -10,15 +10,19 @@ const srt = new SelectRandomTetromino
 
 const gridCanvas = document.getElementById("grid-canvas");
 const gridCtx = gridCanvas.getContext("2d");
+const nextCanvas = document.getElementById("next-canvas")
+const nextCtx = nextCanvas.getContext("2d")
 
 const button = document.getElementById("view-button")
 const modeButton = document.getElementById("toggle-mode")
+const scoreContainer = document.querySelector(".score-container")
 const body = document.body
 
 let activeTetrominoes = [null,srt.getNextPiece()]
 let activeTetromino = null 
 
 let isBotActive = false
+let score = 0;
 
 const playerTimer = new PlayerTimer(startPlayerTimer,500)
 playerTimer.start()
@@ -120,6 +124,30 @@ function drawGridCanvas(verticalOffset = 0){
     
 }
 
+function drawNextCanvas(){
+    let next = activeTetrominoes[1]
+    console.log(next)
+
+    nextCtx.clearRect(0, 0, nextCanvas.width, nextCanvas.height);
+
+    let xOffset = next.dimension === 2 ? 20 : next.dimension === 3 ? 10 : next.dimension === 4 ? 0 : null
+    let yOffset = next.dimension === 2 ? 10 : next.dimension === 3 ? 10 : next.dimension === 4 ? 0 : null
+
+    for(let r = 0; r < next.cells.length; r++){
+        for(let c = 0; c < next.dimension; c++){
+            if(next.cells[r][c] !=0){
+                console.log("drawing")
+                nextCtx.fillStyle = hexToRGBBitwise(next.cells[r][c])
+                nextCtx.fillRect(xOffset + 20 * c, yOffset +20 * r, 20,20)
+                nextCtx.strokeStyle = "black"
+                nextCtx.strokeRect(xOffset + 20 * c, yOffset +20 * r, 20,20)
+
+                
+            }
+        }
+    }
+}
+
 
 function startGame(){
     for(let i = 0; i < activeTetrominoes.length; i++){ 
@@ -127,6 +155,8 @@ function startGame(){
     }
     activeTetrominoes[activeTetrominoes.length - 1] = srt.getNextPiece()
     activeTetromino = activeTetrominoes[0]
+
+    drawNextCanvas()
 
 
     if(isBotActive){
@@ -151,6 +181,9 @@ function startGame(){
 function endTurn(){
     grid.addToBoard(activeTetromino)
 
+    score += grid.clearLines()
+
+    updateScore()
     drawGridCanvas()
     return !grid.exceededGrid()
 }
@@ -182,14 +215,16 @@ function startAnimation(callback = function(){}){
     requestAnimationFrame(() => animationTimer.animateFrame())
 }
 
-
-
 function hexToRGBBitwise(v) { 
     const red = (v >> 16) & 0xFF;   // Shift right by 16 bits and mask with 0xFF for red
     const green = (v >> 8) & 0xFF;  // Shift right by 8 bits and mask with 0xFF for green
     const blue = v & 0xFF;          // Mask the last 8 bits for blue
 
     return `rgb(${red}, ${green}, ${blue})`;
+}
+
+function updateScore(){
+     scoreContainer.innerHTML = score.toString()
 }
 
 button.addEventListener("click",() => {
@@ -211,7 +246,7 @@ modeButton.addEventListener("click", () =>{
             startGame()
         })
     }else{
-        playerTimer.start()
+        // playerTimer.start()
         isBotActive =false 
         modeButton.style.color = "red"
     }

@@ -38,5 +38,6 @@ export class PlayerTimer{
         this.callback()
         this.delay = newDelay
         this.lastUpdate = Date.now()
+        this.start()
     }
 }

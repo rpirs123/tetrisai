@@ -20,7 +20,7 @@ export class Tetromino{
             case 1:  // I  0x00FFF   0x000000  black
                 piece = new Tetromino([
                     [0x000000,0x000000 ,0x000000 ,0x000000 ],
-                    [0x00FFF, 0x00FFF ,0x00FFF ,0x00FFF ],
+                    [0x00FFFF, 0x00FFFF ,0x00FFFF ,0x00FFFF ],
                     [0x000000,0x000000 ,0x000000 ,0x000000 ],
                     [0x000000,0x000000 ,0x000000 ,0x000000 ]
                 ])
@@ -157,7 +157,7 @@ export class Tetromino{
             return true
         }
 
-        rotate(grid){ // transpose = rows bcome columns, columns bcome rows
+        rotate(grid){ 
 
             let adjustedPosition = this.positionAfterRotation(grid)
             
