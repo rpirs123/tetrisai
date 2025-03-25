@@ -7,9 +7,34 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-        <button id="view-button">toggle dark/light mode</button>
-        <button id="toggle-mode">toggle AI on/off</button>
-        <canvas width="200px" height="400px"  id="grid-canvas"></canvas>
+
+
+    <div id="container">
+
+        <div id = game-container>
+            <canvas width="200px" height="400px"  id="grid-canvas"></canvas>
+
+
+            <div id="controls-container">
+
+                <div class="next-tetromino">
+                    <p>Next Tetromino:</p>
+                    <canvas width="80px" height="80px"  id=next-canvas"></canvas>
+                </div>
+                <div class="score-container">
+                    Lines cleared: 
+                        0
+                </div>
+                <button id="view-button">toggle dark/light mode</button>
+                <button id="toggle-mode">toggle AI on/off</button>
+            </div>
+           
+        </div>
+
+
+    </div>
+       
+        
 
     <script type="module" src="main.js"></script>
 </body>
