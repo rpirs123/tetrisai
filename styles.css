@@ -28,8 +28,9 @@ body{
     text-align: center;
     font-size:15px;
     
-   
-    
+  }
+  #game-container{
+    color: #00FFFF;
   }
 
   #controls-container button{
@@ -60,3 +61,4 @@ body{
     width: 100%;
     float: right;
   }
+
