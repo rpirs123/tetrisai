@@ -55,9 +55,10 @@ body{
   }
 
   .score-container::before{
-    content: "lines cleared:";
+    content: "Lines cleared:";
     color: white;
     font-size: 15px;
+    font-weight: bold;
     width: 100%;
     float: right;
   }
