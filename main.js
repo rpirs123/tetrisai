@@ -2,10 +2,13 @@ import { Grid } from "./grid.js"
 import { SelectRandomTetromino } from "./selectRandomTetromino.js";
 import { AnimationTimer } from "./animationTimer.js";
 import { PlayerTimer } from "./playerTimer.js";
+import { Ai } from "./ai.js";
 
 
 const grid = new Grid(22,10)
 const srt = new SelectRandomTetromino
+const ai = new Ai
+console.log(ai)
 
 
 const gridCanvas = document.getElementById("grid-canvas");
@@ -21,7 +24,7 @@ const body = document.body
 let activeTetrominoes = [null,srt.getNextPiece()]
 let activeTetromino = null 
 
-let isBotActive = false
+let isBotActive = true
 let score = 0;
 
 const playerTimer = new PlayerTimer(startPlayerTimer,500)
@@ -94,7 +97,6 @@ function onKeyDown(event){
 
 function drawGridCanvas(verticalOffset = 0){
     
-    
      gridCtx.clearRect(0, 0, gridCanvas.width, gridCanvas.height);
 
 
@@ -120,8 +122,6 @@ function drawGridCanvas(verticalOffset = 0){
             }
         }
     }
-
-    
 }
 
 function drawNextCanvas(){
@@ -156,10 +156,13 @@ function startGame(){
     activeTetrominoes[activeTetrominoes.length - 1] = srt.getNextPiece()
     activeTetromino = activeTetrominoes[0]
 
+    drawGridCanvas()
     drawNextCanvas()
 
 
     if(isBotActive){
+
+        activeTetromino = ai.returnBestTetromino(grid,activeTetrominoes)
         startAnimation(function(){
             while(activeTetromino.moveDown(grid));
             if(!endTurn()){
@@ -226,11 +229,6 @@ function hexToRGBBitwise(v) {
 function updateScore(){
      scoreContainer.innerHTML = score.toString()
 }
-
-button.addEventListener("click",() => {
-    body.classList.toggle("light-mode");
-
-})
 
 modeButton.addEventListener("click", () =>{
     if(!isBotActive){

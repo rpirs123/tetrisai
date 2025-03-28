@@ -233,10 +233,8 @@ export class Tetromino{
 
             //reverse each row
             for(let r = 0; r < this.cells.length; r++){
-                console.log(this.cells[r])
                 this.cells[r].reverse()
             }
-            console.log(this)
         }
         
     }

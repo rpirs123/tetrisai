@@ -81,5 +81,84 @@ export class Grid {
         
         return clearedLines
     }
+
+    clone(){
+
+       let _grid = new Grid(this.rows,this.columns)
+        for(let r = 0; r < this.rows; r++){
+            for(let c = 0; c < this.columns; c++){
+                _grid.cells[r][c] = this.cells[r][c]
+            }
+        }
+
+       return _grid
+    }
+
+
+    getAggregateHeight(){
+        let aggHeight = 0;
+
+        for(let i = 0; i < this.columns; i++){
+            aggHeight += this.columnHeight(i)
+        }
+
+        return aggHeight
+    }
+
+    columnHeight(c){
+        let r = 0;
+        while (r < this.rows && this.cells[r][c] == 0) {
+            r++;
+        }
+        return this.rows - r;
+    }
+
+    getClearedLines(){
+        let counter = 0;
+
+        for(let r = 0; r < this.rows; r++){
+            if(this.isLine(r)){
+                counter++
+            }
+        }
+        return counter
+    }
+
+    isLine(row){
+
+        for(let c = 0; c < this.columns; c++){
+            if(this.cells[row][c] != 0){
+                return false
+            }
+        }
+        return true
+    }
+
+    getHoles(){
+        let counter = 0;
+
+        for(let c = 0; c < this.columns; c++){
+            let block = false
+
+            for(let r = 0; r < this.rows; r++){
+                if(this.cells[r][c] != 0){
+                    block = true    // mark the row as filled
+                }else if(this.cells[r][c] === 0 && block){
+                    counter++
+                }
+            }
+        }
+        return counter
+    }
+
+    getBumpiness(){
+        let counter = 0; 
+
+        for(let c = 0; c < this.columns -1; c++){
+            counter += Math.abs(this.columnHeight(c) - this.columnHeight(c+1))
+        }
+
+        return counter
+    }
 }
 
